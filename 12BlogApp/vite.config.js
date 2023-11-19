@@ -11,12 +11,12 @@ export default defineConfig({
     rollupOptions:{
       input:{
         main:"./index.html",
-        about:"./pages/About.html",
-        posts:"./pages/AddPost.html",
-        "add-post":"./pages/AddPost.html",
-        login:"./pages/Login.html",
-        signup:"./pages/Signup.html",
-        verify:"./pages/Verify.html"
+        about:resolve(__dirname,"src/pages/About.html"),
+        posts:resolve(__dirname,"src/pages/AddPost.html"),
+        "add-post":resolve(__dirname,"src/pages/AddPost.html"),
+        login:resolve(__dirname,"src/pages/Login.html"),
+        signup:resolve(__dirname,"src/pages/Signup.html"),
+        verify:resolve(__dirname,"src/pages/Verify.html")
       }
     }
   }
