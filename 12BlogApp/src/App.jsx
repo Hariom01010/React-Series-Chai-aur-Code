@@ -1,43 +1,34 @@
-import { useEffect, useState } from 'react'
-import { Header, Footer } from './components'
-import { useDispatch } from "react-redux"
-import authService from './appwrite/auth_service'
-import { login, logout } from './store/authSlice'
-import './App.css'
-
-
+import React, { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import "./App.css";
+import Header from "./components/Header/Header";
+import { useSelector } from "react-redux";
+import Footer from "./components/Footer/Footer";
 
 function App() {
+  const [progress, setProgress] = useState(0)
+  const theme = useSelector((state) => {
+    return state.themeReducer.theme
+  });
 
-  const [isLoading, setIsLoading] = useState(true)
-  const dispatch = useDispatch();
 
-  useEffect(()=>{
-    authService.getCurrentUser()
-    .then((userdata) => {
-      if(userdata){
-        dispatch(login({userdata}))
-      }else{
-        dispatch(logout())
-      }
-    })
-    .finally(()=> setIsLoading(false))
-  }, [])
+  useEffect(() => {
+    document.querySelector("body").classList.remove("light", "dark")
+    const html = document.querySelector("html")
+    html.classList.remove("light", "dark")
+    html.classList.add(theme)
+    if(theme == "dark"){
+      document.querySelector("body").classList.add("dark:bg-[#212121]", "dark:text-slate-50")
+    }
+  }, [theme]);
 
-  if(isLoading){
-    return(
-      <>
-        <h1>Still Loading Data...</h1>
-      </>
-  )}else{
-    return(
-      <>
-        <Header />
-          <h1> Data is loaded</h1>
-        <Footer />
-      </>
-    )
-  }
+  return (
+    <>
+      <Header />
+      <Outlet />
+      <Footer />
+    </>
+  );
 }
 
-export default App
+export default App;
